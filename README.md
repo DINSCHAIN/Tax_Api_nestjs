@@ -57,6 +57,23 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+# US Tax Filing System – NestJS Backend
+
+A structured API system for managing U.S. tax filings for SPVs (Special Purpose Vehicles) and their investors. 
+
+Built using NestJS, TypeScript, and PostgreSQL with Sequelize ORM.
+
+---
+
+## Tech Stack
+
+- **Backend Framework**: NestJS + TypeScript
+- **Database**: PostgreSQL
+- **ORM**: Sequelize + sequelize-typescript
+- **Environment Config**: dotenv + @nestjs/config
+- **PDF Generator** (optional): Puppeteer / PDFKit
+- **API Documentation**: Swagger (via @nestjs/swagger)
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
