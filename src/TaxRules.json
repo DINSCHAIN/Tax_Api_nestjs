@@ -1,0 +1,68 @@
+{
+  "rules": [
+    {
+      "ruleId": "R001",
+      "name": "Federal Income Tax Slab",
+      "category": "Income Tax",
+      "inputs": ["filing_status", "taxable_income"],
+      "formula": "Apply IRS progressive tax slabs based on filing status",
+      "output": "federal_tax_due"
+    },
+    {
+      "ruleId": "R002",
+      "name": "Carried Interest Tax Treatment",
+      "category": "Capital Gains",
+      "inputs": ["carried_interest_amount", "holding_period_years", "income_bracket"],
+      "formula": "If holding_period >= 3 then LTCG else ordinary_rate",
+      "output": "carried_interest_tax_due"
+    },
+    {
+      "ruleId": "R003",
+      "name": "SPV Entity Tax Classification",
+      "category": "Entity Tax",
+      "inputs": ["entity_type", "jurisdiction"],
+      "formula": "Pass-through entity = investor taxed, else entity taxed at corp_rate",
+      "output": "entity_tax_due_or_pass_through"
+    },
+    {
+      "ruleId": "R004",
+      "name": "Investor K-1 Allocation",
+      "category": "Distribution",
+      "inputs": ["total_income", "ownership_percentage"],
+      "formula": "income * ownership_percentage",
+      "output": "investor_income_share"
+    },
+    {
+      "ruleId": "R005",
+      "name": "State Income Allocation",
+      "category": "State Tax",
+      "inputs": ["income", "apportionment_ratio", "state_tax_rate"],
+      "formula": "income * apportionment_ratio * state_tax_rate",
+      "output": "state_tax_due"
+    },
+    {
+      "ruleId": "R006",
+      "name": "Management Fee Deductibility",
+      "category": "Deduction",
+      "inputs": ["gross_receipts", "deductible_expenses"],
+      "formula": "gross_receipts - deductible_expenses",
+      "output": "net_taxable_income"
+    },
+    {
+      "ruleId": "R007",
+      "name": "Capital Gains from Exit",
+      "category": "Capital Gains",
+      "inputs": ["sale_proceeds", "cost_basis", "holding_period"],
+      "formula": "gain = sale_proceeds - cost_basis; tax = gain * applicable_rate",
+      "output": "capital_gains_tax"
+    },
+    {
+      "ruleId": "R008",
+      "name": "Qualified Business Income Deduction",
+      "category": "Deduction",
+      "inputs": ["qualified_income", "is_sstb", "income_threshold"],
+      "formula": "If eligible, deduction = 20% of qualified_income",
+      "output": "qbi_deduction"
+    }
+  ]
+}
