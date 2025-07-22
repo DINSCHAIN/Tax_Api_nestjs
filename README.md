@@ -69,7 +69,7 @@ Built using NestJS, TypeScript, and PostgreSQL with Sequelize ORM.
 
 - **Backend Framework**: NestJS + TypeScript
 - **Database**: PostgreSQL
-- **ORM**: Sequelize + sequelize-typescript
+- **ORM**: Typeorm
 - **Environment Config**: dotenv + @nestjs/config
 - **PDF Generator** (optional): Puppeteer / PDFKit
 - **API Documentation**: Swagger (via @nestjs/swagger)
