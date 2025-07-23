@@ -8,10 +8,12 @@ import {
 } from '@nestjs/common';
 import { EvaluateTaxDto } from './dto/evaluate-tax.dto';
 import { EvaluationsService } from './evaluations.service';
-import { K1FormService } from '../../forms/services/k1-form.service';
-import { Form1065Service } from '../../forms/services/form1065.service';
+import { K1FormService } from '../forms/services/k1-form/k1-form.service';
+import { Form1065Service } from '../forms/services/form1065/form1065.service';
 import { Response } from 'express';
+import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 
+@ApiTags('tax')
 @Controller('tax')
 export class EvaluationsController {
   constructor(
@@ -27,7 +29,12 @@ export class EvaluationsController {
 
   @Get('form-k1/:reportId')
   async getK1(@Param('reportId') reportId: string, @Res() res: Response) {
-    const { investor, tax } = this.evaluationsService.getReport(reportId);
+    const report = this.evaluationsService.getReport(reportId);
+    if (!report) {
+      res.status(404).send('Report not found');
+      return;
+    }
+    const { investor, tax } = report;
     const buffer = await this.k1FormService.generate(investor, tax);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename=K1_${investor.investorId}.pdf`);
@@ -42,6 +49,10 @@ export class EvaluationsController {
     @Res() res: Response,
   ) {
     const data = this.evaluationsService.getReport(reportId);
+    if (!data) {
+      res.status(404).send('Report not found');
+      return;
+    }
     const buffer = await this.form1065Service.generate(fundName, year, [data.investor], [data.tax]);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename=Form1065_${fundName}_${year}.pdf`);

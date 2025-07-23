@@ -34,3 +34,5 @@ export class EvaluationsService {
     return this.reports.get(reportId);
   }
 }
+
+export { EvaluateTaxDto };
